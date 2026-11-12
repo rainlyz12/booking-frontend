@@ -17,6 +17,9 @@ By default, the app uses `https://booking-backend-c77p.onrender.com`. To use ano
 - Registers members with `POST /api/auth/register` and signs them in with `POST /api/auth/login`.
 - Keeps the bearer token in `sessionStorage` for the current browser session and checks it with `GET /api/auth/profile`.
 - Creates bookings with `POST /api/bookings`, lists the signed-in member's bookings with `GET /api/bookings`, and cancels them with `DELETE /api/bookings/{id}`.
+- Checks occupied periods before booking, asks members to confirm the booking summary, and refreshes availability after a `409` conflict.
+- Separates pending, upcoming, and past bookings, exports calendar events as `.ics`, and allows password changes through `PUT /api/auth/password`.
+- Filters rooms by type, text, and minimum capacity; admins can view a date-filtered room-by-room daily schedule.
 - Shows an admin panel to review bookings and manage active rooms through the `/api/admin/*` endpoints when signed in as an admin.
 - Displays backend errors, including unavailable rooms and overlapping booking times.
 

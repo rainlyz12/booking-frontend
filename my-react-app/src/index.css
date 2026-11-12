@@ -5,7 +5,7 @@
 :root {
   font-family: "Noto Sans Thai", "Sarabun", "Segoe UI", sans-serif;
   color: #17241f;
-  background: #f7f8f6;
+  background: #f5f4ef;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,10 +14,16 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; min-height: 100vh; }
-button, input { font: inherit; }
+body { margin: 0; min-width: 320px; min-height: 100vh; font-size: 19px; line-height: 1.6; }
+button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
-::selection { color: #fff; background: #247a59; }
+a, button { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #a76d34;
+  outline-offset: 3px;
+}
+h1, h2, h3, h4 { text-wrap: balance; }
+::selection { color: #fff; background: #8a5528; }
 
 .hide-scrollbar { scrollbar-width: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }
