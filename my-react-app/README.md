@@ -1,16 +1,26 @@
-# React + Vite
+# สนามดี — Sports Booking
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + Vite frontend for the [booking-backend](https://github.com/BringzUU/booking-backend) API.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev
+```
 
-## React Compiler
+By default, the app uses `https://booking-backend-c77p.onrender.com`. To use another backend, copy `.env.example` to `.env` and set `VITE_API_BASE_URL` to the API origin (without an `/api` suffix), then restart Vite.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Connected API features
 
-## Expanding the Oxlint configuration
+- Loads active rooms from `GET /api/rooms`.
+- Registers members with `POST /api/auth/register` and signs them in with `POST /api/auth/login`.
+- Keeps the bearer token in `sessionStorage` for the current browser session and checks it with `GET /api/auth/profile`.
+- Creates bookings with `POST /api/bookings`, lists the signed-in member's bookings with `GET /api/bookings`, and cancels them with `DELETE /api/bookings/{id}`.
+- Displays backend errors, including unavailable rooms and overlapping booking times.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Room prices and availability are not included in the backend API response, so the interface does not claim a price or availability before the booking request is checked by the server.
+
+## Deployment
+
+Configure the backend's `ALLOWED_ORIGINS` environment variable with the exact deployed frontend origin (scheme and hostname, no path or trailing slash). The backend allows local Vite origins by default.
