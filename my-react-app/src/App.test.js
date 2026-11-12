@@ -103,7 +103,7 @@ describe('booking flow', () => {
     render(<App />)
 
     expect(await screen.findByText('สนามแบดมินตัน 1')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'จองห้องประชุม' }))
+    fireEvent.click(screen.getByRole('button', { name: 'จองสนาม' }))
     expect(await screen.findByText('ยังไม่มีช่วงเวลาที่ถูกจองในวันที่เลือก')).toBeInTheDocument()
 
     fireEvent.change(screen.getByLabelText('วันที่ต้องการจอง'), { target: { value: getTomorrowInBangkok() } })
@@ -144,7 +144,7 @@ describe('booking flow', () => {
     render(<App />)
 
     expect(await screen.findByText('สนามแบดมินตัน 1')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'จองห้องประชุม' }))
+    fireEvent.click(screen.getByRole('button', { name: 'จองสนาม' }))
     expect(await screen.findByRole('dialog', { name: 'เข้าสู่ระบบ' })).toBeInTheDocument()
     fireEvent.change(screen.getByLabelText('อีเมล'), { target: { value: 'member@example.com' } })
     fireEvent.change(screen.getByLabelText(/รหัสผ่าน/), { target: { value: 'password123' } })
@@ -165,7 +165,7 @@ describe('booking flow', () => {
     render(<App />)
 
     expect(await screen.findByText('สนามแบดมินตัน 1')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'จองห้องประชุม' }))
+    fireEvent.click(screen.getByRole('button', { name: 'จองสนาม' }))
     expect(await screen.findByText('ยังไม่มีช่วงเวลาที่ถูกจองในวันที่เลือก')).toBeInTheDocument()
     fireEvent.change(screen.getByLabelText('วันที่ต้องการจอง'), { target: { value: getTomorrowInBangkok() } })
     fireEvent.change(screen.getByLabelText('เวลาเริ่ม'), { target: { value: '10:00' } })
