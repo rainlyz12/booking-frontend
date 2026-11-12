@@ -63,6 +63,33 @@ describe('booking flow', () => {
     expect(screen.getByRole('img', { name: 'ห้องประชุมพร้อมโต๊ะและเก้าอี้' })).toBeInTheDocument()
   })
 
+  test('shows the meeting room label and uses the requested booking button text', async () => {
+    global.fetch.mockImplementation((url) => {
+      if (url.endsWith('/api/rooms')) {
+        return Promise.resolve(jsonResponse([{
+          id: 8,
+          name: 'สนามอเนกประสงค์ 1',
+          type: 'room',
+          capacity: 10,
+          description: 'พื้นที่กีฬาในร่ม',
+        }]))
+      }
+      if (url.endsWith('/api/auth/profile')) {
+        return Promise.resolve(jsonResponse({ id: 1, name: 'Test Member', email: 'member@example.com', role: 'member' }))
+      }
+      if (url.includes('/api/rooms/8/availability')) {
+        return Promise.resolve(jsonResponse({ room_id: 8, booking_date: getTomorrowInBangkok(), occupied: [] }))
+      }
+      throw new Error(`Unexpected API request: ${url}`)
+    })
+
+    render(<App />)
+
+    expect(await screen.findAllByText('ห้องประชุม')).toHaveLength(2)
+    fireEvent.click(screen.getByRole('button', { name: 'จองห้องประชุม' }))
+    expect(await screen.findByRole('dialog', { name: 'สนามอเนกประสงค์ 1' })).toBeInTheDocument()
+  })
+
   test('explains the booking steps and links the footer to the guide', async () => {
     render(<App />)
 
@@ -76,7 +103,7 @@ describe('booking flow', () => {
     render(<App />)
 
     expect(await screen.findByText('สนามแบดมินตัน 1')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'จองสนาม' }))
+    fireEvent.click(screen.getByRole('button', { name: 'จองห้องประชุม' }))
     expect(await screen.findByText('ยังไม่มีช่วงเวลาที่ถูกจองในวันที่เลือก')).toBeInTheDocument()
 
     fireEvent.change(screen.getByLabelText('วันที่ต้องการจอง'), { target: { value: getTomorrowInBangkok() } })
@@ -117,7 +144,7 @@ describe('booking flow', () => {
     render(<App />)
 
     expect(await screen.findByText('สนามแบดมินตัน 1')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'จองสนาม' }))
+    fireEvent.click(screen.getByRole('button', { name: 'จองห้องประชุม' }))
     expect(await screen.findByRole('dialog', { name: 'เข้าสู่ระบบ' })).toBeInTheDocument()
     fireEvent.change(screen.getByLabelText('อีเมล'), { target: { value: 'member@example.com' } })
     fireEvent.change(screen.getByLabelText(/รหัสผ่าน/), { target: { value: 'password123' } })
@@ -138,7 +165,7 @@ describe('booking flow', () => {
     render(<App />)
 
     expect(await screen.findByText('สนามแบดมินตัน 1')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'จองสนาม' }))
+    fireEvent.click(screen.getByRole('button', { name: 'จองห้องประชุม' }))
     expect(await screen.findByText('ยังไม่มีช่วงเวลาที่ถูกจองในวันที่เลือก')).toBeInTheDocument()
     fireEvent.change(screen.getByLabelText('วันที่ต้องการจอง'), { target: { value: getTomorrowInBangkok() } })
     fireEvent.change(screen.getByLabelText('เวลาเริ่ม'), { target: { value: '10:00' } })
