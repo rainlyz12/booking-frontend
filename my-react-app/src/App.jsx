@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { apiRequest } from './api'
+import AdminPanel from './AdminPanel'
 
 const iconPaths = {
   arrow: <><path d="M4 12h15" /><path d="m13 5 7 7-7 7" /></>,
@@ -80,6 +81,7 @@ function App() {
   const [authError, setAuthError] = useState('')
   const [authSubmitting, setAuthSubmitting] = useState(false)
   const [bookingsOpen, setBookingsOpen] = useState(false)
+  const [adminOpen, setAdminOpen] = useState(false)
   const [bookings, setBookings] = useState([])
   const [bookingsLoading, setBookingsLoading] = useState(false)
   const [bookingsError, setBookingsError] = useState('')
@@ -322,6 +324,7 @@ function App() {
             <a href="#visit" className="text-[10px] font-semibold tracking-[.07em] text-[#494a43] no-underline transition hover:text-[#bd7028]">สถานที่</a>
           </div>
           <div className="flex items-center gap-2">
+            {user?.role === 'admin' && <button type="button" onClick={() => setAdminOpen(true)} className="border border-[#d6d2c8] px-2.5 py-2.5 text-[9px] font-bold text-[#3d3d36] transition hover:border-[#bc782f] sm:px-3">จัดการระบบ</button>}
             {user && <button type="button" onClick={() => { setBookingsOpen(true); loadBookings() }} className="border border-[#d6d2c8] px-2.5 py-2.5 text-[9px] font-bold text-[#3d3d36] transition hover:border-[#bc782f] sm:px-3">การจอง</button>}
             <button type="button" onClick={() => { if (user) handleLogout(); else { setAuthMode('login'); setAuthError(''); setAuthOpen(true) } }} className="border border-[#d6d2c8] px-3 py-2.5 text-[9px] font-bold text-[#3d3d36] transition hover:border-[#bc782f]">{user ? 'ออกจากระบบ' : 'เข้าสู่ระบบ'}</button>
             <a href="#courts" className="group flex items-center gap-2 bg-[#df8c37] px-4 py-2.5 text-[9px] font-bold tracking-[.08em] text-[#201e19] no-underline transition hover:bg-[#efa957] sm:px-5 sm:text-[10px]">จองสนาม <Icon name="arrow" size={14} className="transition group-hover:translate-x-1" /></a>
@@ -445,6 +448,8 @@ function App() {
           </>}
         </section>
       </div>}
+
+      {adminOpen && user?.role === 'admin' && <AdminPanel token={token} onClose={() => setAdminOpen(false)} onRoomsChanged={loadRooms} />}
 
       {authOpen && <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 backdrop-blur-[2px] sm:items-center sm:p-5" onMouseDown={(event) => { if (event.target === event.currentTarget) setAuthOpen(false) }}>
         <section role="dialog" aria-modal="true" aria-labelledby="auth-title" className="w-full max-w-[420px] bg-[#f2f0e9] p-5 shadow-2xl sm:p-7">

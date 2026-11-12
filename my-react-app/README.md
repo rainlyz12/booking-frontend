@@ -17,6 +17,7 @@ By default, the app uses `https://booking-backend-c77p.onrender.com`. To use ano
 - Registers members with `POST /api/auth/register` and signs them in with `POST /api/auth/login`.
 - Keeps the bearer token in `sessionStorage` for the current browser session and checks it with `GET /api/auth/profile`.
 - Creates bookings with `POST /api/bookings`, lists the signed-in member's bookings with `GET /api/bookings`, and cancels them with `DELETE /api/bookings/{id}`.
+- Shows an admin panel to review bookings and manage active rooms through the `/api/admin/*` endpoints when signed in as an admin.
 - Displays backend errors, including unavailable rooms and overlapping booking times.
 
 Room prices and availability are not included in the backend API response, so the interface does not claim a price or availability before the booking request is checked by the server.
@@ -24,3 +25,5 @@ Room prices and availability are not included in the backend API response, so th
 ## Deployment
 
 Configure the backend's `ALLOWED_ORIGINS` environment variable with the exact deployed frontend origin (scheme and hostname, no path or trailing slash). The backend allows local Vite origins by default.
+
+New registrations are members. To use the admin panel, sign in with an account whose backend role is `admin`; see the backend README for admin account setup.
