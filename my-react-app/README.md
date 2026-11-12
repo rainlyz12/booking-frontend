@@ -1,15 +1,15 @@
 # สนามดี — Sports Booking
 
-React + Vite frontend for the [booking-backend](https://github.com/BringzUU/booking-backend) API.
+React frontend for the [booking-backend](https://github.com/BringzUU/booking-backend) API, built with Create React App.
 
 ## Run locally
 
 ```sh
 npm install
-npm run dev
+npm start
 ```
 
-By default, the app uses `https://booking-backend-c77p.onrender.com`. To use another backend, copy `.env.example` to `.env` and set `VITE_API_BASE_URL` to the API origin (without an `/api` suffix), then restart Vite.
+By default, the app uses `https://booking-backend-c77p.onrender.com`. To use another backend, copy `.env.example` to `.env` and set `REACT_APP_API_BASE_URL` to the API origin (without an `/api` suffix), then restart the development server.
 
 ## Connected API features
 
@@ -24,6 +24,8 @@ Room prices and availability are not included in the backend API response, so th
 
 ## Deployment
 
-Configure the backend's `ALLOWED_ORIGINS` environment variable with the exact deployed frontend origin (scheme and hostname, no path or trailing slash). The backend allows local Vite origins by default.
+On Vercel, select the **Create React App** preset. The build command is `npm run build` and the output directory is `build`. Set `REACT_APP_API_BASE_URL` only when using a backend other than the default.
 
 New registrations are members. To use the admin panel, sign in with an account whose backend role is `admin`; see the backend README for admin account setup.
+
+Configure the backend's `ALLOWED_ORIGINS` environment variable with the exact deployed frontend origin (scheme and hostname, no path or trailing slash). The backend allows local React development origins by default.

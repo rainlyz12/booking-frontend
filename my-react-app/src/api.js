@@ -1,4 +1,4 @@
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://booking-backend-c77p.onrender.com').replace(/\/+$/, '')
+const API_BASE_URL = (process.env.REACT_APP_API_BASE_URL || 'https://booking-backend-c77p.onrender.com').replace(/\/+$/, '')
 
 export class ApiError extends Error {
   constructor(message, status) {
